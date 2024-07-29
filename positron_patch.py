@@ -7,10 +7,13 @@ import os
 # Operación (patch o restore) desde la línea de comandos
 operation = sys.argv[1]
 
+# Directorio del script actual
+script_dir = os.path.dirname(os.path.realpath(__file__))
+
 # Rutas de los archivos
 product_path = r"C:\Program Files\Positron\resources\app\product.json"
-patch_path = r"C:\ruta\al\patch.json"
-cache_path = r"C:\ruta\al\cache.json"
+patch_path = os.path.join(script_dir, "patch.json")
+cache_path = os.path.join(script_dir, "cache.json")
 
 class term_colors:
     WARNING = "\033[93m"

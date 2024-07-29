@@ -18,6 +18,7 @@ cache_path = os.path.join(script_dir, "cache.json")
 class term_colors:
     WARNING = "\033[93m"
     ENDC = "\033[0m"
+    SUCCESS = "\033[92m"
 
 # Verifica si el archivo product.json existe
 if not os.path.exists(product_path):
@@ -31,6 +32,7 @@ if not os.path.exists(cache_path):
 
 # Función para aplicar el parche
 def patch():
+    print("Aplicando parche para Positron en " + product_path)
     with open(product_path, "r") as product_file:
         product_data = json.load(product_file)
     with open(patch_path, "r") as patch_file:
@@ -44,9 +46,11 @@ def patch():
         json.dump(product_data, product_file, indent="\t")
     with open(cache_path, "w") as cache_file:
         json.dump(cache_data, cache_file, indent="\t")
+    print(term_colors.SUCCESS + "Parche aplicado con éxito!" + term_colors.ENDC)
 
 # Función para restaurar el archivo original
 def restore():
+    print("Restaurando archivo original en " + product_path)
     with open(product_path, "r") as product_file:
         product_data = json.load(product_file)
     with open(patch_path, "r") as patch_file:
@@ -60,6 +64,7 @@ def restore():
         product_data[key] = cache_data[key]
     with open(product_path, "w") as product_file:
         json.dump(product_data, product_file, indent="\t")
+    print(term_colors.SUCCESS + "Archivo restaurado con éxito!" + term_colors.ENDC)
 
 # Ejecutar la operación seleccionada
 if operation == "patch":
